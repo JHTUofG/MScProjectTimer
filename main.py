@@ -1,5 +1,8 @@
 from datetime import datetime
 from tkinter import *
+from icon import img
+import base64
+import os
 
 
 def cal_week():
@@ -61,6 +64,12 @@ class Countdown:
     window = Tk()
     window.title("MSc Project Timer")
     window.geometry("345x139")
+
+    tmp = open("tmp.ico", "wb+")
+    tmp.write(base64.b64decode(img))
+    tmp.close()
+    window.iconbitmap('tmp.ico')  # add icon
+    os.remove("tmp.ico")
 
     week, week_end, month_end = cal_week()
 

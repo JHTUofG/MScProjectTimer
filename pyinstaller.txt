@@ -1,0 +1,1 @@
+.\venv\Scripts\pyinstaller.exe -i hallton.ico -F -w --add-data "D:\Doc\Python\countdown\icon.py;." main.py
