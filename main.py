@@ -63,7 +63,7 @@ class Countdown:
 
     window = Tk()
     window.title("MSc Project Timer")
-    window.geometry("345x139")
+    window.geometry("350x139")
 
     tmp = open("tmp.ico", "wb+")
     tmp.write(base64.b64decode(img))
@@ -74,15 +74,19 @@ class Countdown:
     week, week_end, month_end = cal_week()
 
     zero_label = Label(text=f"Week {week}", font=('思源黑体 CN Bold', 15), anchor='w')
-    first_label = Label(text="This week ends in ", font=('思源黑体 CN Regular', 15), anchor='w')
-    second_label = Label(text="The project ends in ", font=('思源黑体 CN Regular', 15), anchor='w')
+    first_label = Label(text="%-21s" % "Week ends in", font=('思源黑体 CN Regular', 15), anchor='w')
+    first_label_time = Label(font=('思源黑体 CN Regular', 15), anchor='e')
+    second_label = Label(text="%-17s" % "Project ends in", font=('思源黑体 CN Regular', 15), anchor='w')
+    second_label_time = Label(font=('思源黑体 CN Regular', 15), anchor='e')
     time_label = Label(font=('思源黑体 CN Regular', 15), anchor='e')
 
     def __init__(self):
         self.zero_label.place(x=25, y=25, width=150, height=25)
-        self.first_label.place(x=25, y=55, width=293, height=25)
+        self.first_label.place(x=25, y=55, width=293, height=30)
+        self.first_label_time.place(x=170, y=55, width=160, height=30)
         self.second_label.place(x=25, y=85, width=293, height=30)
-        self.time_label.place(x=132, y=23, width=188, height=30)
+        self.second_label_time.place(x=170, y=85, width=160, height=30)
+        self.time_label.place(x=120, y=23, width=210, height=30)
 
         self.refresh_week()
         self.refresh_week_ends()
@@ -98,15 +102,15 @@ class Countdown:
         self.window.after(1000, self.refresh_week)
 
     def refresh_week_ends(self):
-        week_end = str(datetime(year=2023, month=self.month_end, day=self.week_end) - datetime.now()).split(", ")
-        self.first_label.config(text="%-21s%-8s%s" % ("Week ends in", week_end[0], week_end[1]))
-        self.first_label.update()
+        week_end = str(datetime(year=2023, month=self.month_end, day=self.week_end) - datetime.now())[:-7].split(", ")
+        self.first_label_time.config(text="%-8s%s" % (week_end[0], week_end[1]))
+        self.first_label_time.update()
         self.window.after(1000, self.refresh_week_ends)
 
     def refresh_proj_ends(self):
-        proj_end = str(datetime(year=2023, month=9, day=2) - datetime.now()).split(", ")
-        self.second_label.config(text="%-17s%-9s%s" % ("Project ends in", proj_end[0], proj_end[1]))
-        self.second_label.update()
+        proj_end = str(datetime(year=2023, month=9, day=2) - datetime.now())[:-7].split(", ")
+        self.second_label_time.config(text="%-9s%s" % (proj_end[0], proj_end[1]))
+        self.second_label_time.update()
         self.window.after(1000, self.refresh_proj_ends)
 
     def refresh_time(self):
