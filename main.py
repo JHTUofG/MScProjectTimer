@@ -1,5 +1,8 @@
 from datetime import datetime
 from tkinter import *
+# from icon import img
+import base64
+import os
 
 
 def cal_week():
@@ -62,6 +65,12 @@ class Countdown:
     window.title("MSc Project Timer")
     window.geometry("350x139")
 
+    # tmp = open("tmp.ico", "wb+")
+    # tmp.write(base64.b64decode(img))
+    # tmp.close()
+    # window.iconbitmap('tmp.ico')  # add icon
+    # os.remove("tmp.ico")
+
     week, week_end, month_end = cal_week()
 
     zero_label = Label(text=f"Week {week}", font=('思源黑体 CN Bold', 15), anchor='w')
@@ -94,7 +103,13 @@ class Countdown:
 
     def refresh_week_ends(self):
         week_end = str(datetime(year=2023, month=self.month_end, day=self.week_end) - datetime.now())[:-7].split(", ")
-        self.first_label_time.config(text="%-8s%s" % (week_end[0], week_end[1]))
+        if len(week_end) > 1:
+            week_end_d = week_end[0]
+            week_end_t = week_end[1]
+        else:
+            week_end_d = ""
+            week_end_t = week_end[0]
+        self.first_label_time.config(text="%-8s%s" % (week_end_d, week_end_t))
         self.first_label_time.update()
         self.window.after(1000, self.refresh_week_ends)
 
