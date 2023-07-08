@@ -103,7 +103,13 @@ class Countdown:
 
     def refresh_week_ends(self):
         week_end = str(datetime(year=2023, month=self.month_end, day=self.week_end) - datetime.now())[:-7].split(", ")
-        self.first_label_time.config(text="%-8s%s" % (week_end[0], week_end[1]))
+        if len(week_end) > 1:
+            week_end_d = week_end[0]
+            week_end_t = week_end[1]
+        else:
+            week_end_d = ""
+            week_end_t = week_end[0]
+        self.first_label_time.config(text="%-8s%s" % (week_end_d, week_end_t))
         self.first_label_time.update()
         self.window.after(1000, self.refresh_week_ends)
 
